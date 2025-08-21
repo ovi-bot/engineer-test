@@ -17,6 +17,7 @@ Unit tests are executed in a separate container and can be run side by side with
 ### Application
 
     docker compose up
+Application will be available at `localhost` (port 80)
 
 ### Tests
 
