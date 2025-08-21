@@ -1,0 +1,8 @@
+services:
+  api-tests:
+    build:
+      context: .
+      dockerfile: docker/tests/Dockerfile
+    volumes:
+      - ./api:/app
+    working_dir: /app

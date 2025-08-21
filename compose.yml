@@ -1,0 +1,43 @@
+services:
+  node:
+    build:
+      context: .
+      dockerfile: docker/node/Dockerfile
+    working_dir: /app
+    volumes:
+      - ./client:/app
+    ports:
+      - "5173:5173"
+
+  php:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    working_dir: /var/www/html
+    volumes:
+      - ./api:/var/www/html
+    expose:
+      - "9000"
+
+  nginx:
+    image: nginx:1.27-alpine
+    depends_on:
+      - node
+      - php
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./api:/var/www/html:ro
+    restart: unless-stopped
+
+  database:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=localdb
+      - MYSQL_DATABASE=engineer_test
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d:ro
+    restart: unless-stopped

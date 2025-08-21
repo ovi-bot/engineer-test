@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.2/phpunit.xsd"
+        bootstrap="vendor/autoload.php"
+        cacheResult="false"
+        beStrictAboutCoverageMetadata="false"
+>
+    <testsuites>
+        <testsuite name="API Test Suite">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <php>
+        <!-- Ensure no accidental real DB usage in tests -->
+        <env name="DB_HOST" value="invalid-host-for-tests"/>
+        <env name="DB_PORT" value="0"/>
+        <env name="DB_NAME" value="test"/>
+        <env name="DB_USER" value="test"/>
+        <env name="DB_PASS" value="test"/>
+    </php>
+</phpunit>
